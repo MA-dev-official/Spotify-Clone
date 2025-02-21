@@ -1,0 +1,51 @@
+.bd{
+    border: 1px solid #fcfbfb5b;
+    
+    margin: 3px;
+}
+.df{
+    display: flex;
+}
+.ai{
+    align-items: center;
+}
+.jc{
+    justify-content: center;
+}
+.bgb{
+    background-color: black;
+    color: white;
+}
+.bgg{
+    background-color: #121212;
+}
+.invert{
+    filter: invert(1);
+}
+.rounded{
+    border-radius: 7px;
+}
+.m1{
+    margin: 5px;
+}
+.gap{
+    gap: 100px;
+}
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #121212; /* Track color */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: black; /* Thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker shade on hover */
+  }
+  
