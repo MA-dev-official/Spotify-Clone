@@ -76,8 +76,9 @@ ul{
     width: 75vw;
     padding: 14px;
 }
+ 
 .spotifyPlaylist{
-    height: 100vh;
+   
     overflow: hidden;
 }
 .spotifyPlaylist>nav{
@@ -86,7 +87,7 @@ ul{
     padding: 10px;
 }
 .cardContainer{
-    height: 80%;
+    height: 71vh;
     padding: 20px;
     flex-wrap: wrap;
     gap: 5px;
@@ -150,6 +151,7 @@ background-position: center;
 }
 .playlist>.card>.play{
   margin: 5px;
+  cursor: pointer;
 }
 .playlist>.card:hover{
     transform: scale(1.1);
@@ -160,7 +162,7 @@ background-position: center;
   width: 100%;
   border-radius: 14px;
   overflow: hidden;
-  margin: 20px 0px;
+  margin: 5px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,7 +178,8 @@ background-position: center;
   height: 20px;
   width: 98%;
   justify-content: space-between;
-  padding: 5px;
+  padding: 8px;
+  margin: 5px;
 }
 .seekbar> .seek{
   position: relative;
@@ -186,6 +189,7 @@ background-position: center;
   border-radius: 7px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .seek> .circle{
   position: absolute;
@@ -207,7 +211,9 @@ background-position: center;
   margin: 10px 5px;
   border: transparent;
   border-radius: 50%;
+  cursor: pointer;
 } 
+
 @media (max-width: 900px) {
     .left{
         padding: 10px;
@@ -234,6 +240,9 @@ background-position: center;
         transform: none; /* Reset scale */
         border-radius: initial; /* Reset border-radius */
         box-shadow: none; /* Reset box-shadow */
+    }
+    .playbar{
+        margin: 15px 0px;
     }
 }
 @media (max-width: 564px) {
