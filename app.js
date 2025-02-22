@@ -24,6 +24,13 @@ async function getFolder() {
   return folder
 }
 
+function updateName(url) {
+  let b = url.src
+  let a = b.split("/").pop().replaceAll("%20", " ");
+  let name = a.replace(".mp3", "");
+  document.querySelector(".name").innerHTML = name;
+}
+
 async function playMusic(url) {
   songs = [];
   let d = await fetch(url);
@@ -59,15 +66,18 @@ async function playMusic(url) {
       if (!currentSong.paused) {
         currentSong.pause();
         card.querySelector(".play").src = "/imgs/play.svg"
+        document.querySelector(".playBtn").src = "/imgs/play.svg"
       } else {
         currentSong.play();
         card.querySelector(".play").src = "/imgs/pause.svg"
+        document.querySelector(".playBtn").src = "/imgs/pause.svg"
       }
       return;
     } else {
       currentSong.pause();
       if (currentCard) {
         currentCard.querySelector(".play").src = "/imgs/play.svg"
+        document.querySelector(".playBtn").src = "/imgs/play.svg"
       }
     }
   }
@@ -75,9 +85,13 @@ async function playMusic(url) {
   currentSong = new Audio(song);
   currentSong.play();
         card.querySelector(".play").src = "/imgs/pause.svg"
+        document.querySelector(".playBtn").src = "/imgs/pause.svg"
         currentCard = card 
+        updateName(currentSong)
       })
     });
+    
+    
     
   }
 }
@@ -122,6 +136,76 @@ async function main() {
       document.querySelector(".left").style.left = "0px"
     })
   });
+  document.querySelector(".playBtn").addEventListener("click",()=>{
+    if (!currentSong.paused) {
+      currentSong.pause()
+      document.querySelector(".playBtn").src = "/imgs/play.svg"
+    } else {
+      currentSong.play()
+      document.querySelector(".playBtn").src = "/imgs/pause.svg"
+    }
+  });
+  
+  //Previous Button 
+  
+  document.querySelector(".prevBtn").addEventListener("click", () => {
+  if (songs.length === 0 || !currentSong) return; // Agar koi song available nahi hai to return kar do
+  
+  let currentIndex = songs.indexOf(currentSong.src); // Current song ka index le lo
+
+  if (currentIndex > 0) {
+    currentIndex--; // Peechli song pe jaane ke liye index kam karna hai
+  } else {
+    currentIndex = songs.length - 1; // Agar pehla song hai to last pe chala jaye
+  }
+
+  // Naya song play karo
+  currentSong.pause();
+  currentSong = new Audio(songs[currentIndex]);
+  currentSong.play();
+updateName(currentSong)
+  // Play button update karo
+  document.querySelector(".playBtn").src = "/imgs/pause.svg";
+
+  // Jo card play ho raha hai usko update karo
+  if (currentCard) {
+    currentCard.querySelector(".play").src = "/imgs/play.svg";
+  }
+
+  let allCards = document.querySelectorAll(".playlist .card");
+  currentCard = allCards[currentIndex];
+  currentCard.querySelector(".play").src = "/imgs/pause.svg";
+});
+
+document.querySelector(".nextBtn").addEventListener("click", () => {
+  if (songs.length === 0 || !currentSong) return; // Agar koi song nahi hai to return kar do
+  
+  let currentIndex = songs.indexOf(currentSong.src); // Current song ka index le lo
+
+  if (currentIndex < songs.length - 1) {
+    currentIndex++; // Agle song pe jaane ke liye index badhao
+  } else {
+    currentIndex = 0; // Agar last song hai to pehla play karo
+  }
+
+  // Naya song play karo
+  currentSong.pause();
+  currentSong = new Audio(songs[currentIndex]);
+  currentSong.play();
+ updateName(currentSong)
+  // Play button update karo
+  document.querySelector(".playBtn").src = "/imgs/pause.svg";
+
+  // Jo card play ho raha hai usko update karo
+  if (currentCard) {
+    currentCard.querySelector(".play").src = "/imgs/play.svg";
+  }
+
+  let allCards = document.querySelectorAll(".playlist .card");
+  currentCard = allCards[currentIndex];
+  currentCard.querySelector(".play").src = "/imgs/pause.svg";
+});
+  
 }
 
 main();

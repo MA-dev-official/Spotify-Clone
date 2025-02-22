@@ -193,6 +193,7 @@ background-position: center;
  background-color: white;
  border-radius: 50%;
  left: 0px;
+ transition: left 0.2s ease-in-out;
 }
 .playbar> .buttons{
   width: 100%;
@@ -202,7 +203,6 @@ background-position: center;
   gap: 5px;
 }
 .buttons> .button{
-  
   margin: 10px 5px;
   border: transparent;
   border-radius: 50%;
