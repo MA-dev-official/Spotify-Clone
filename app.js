@@ -31,6 +31,53 @@ function updateName(url) {
   document.querySelector(".name").innerHTML = name;
 }
 
+function duration(currentSong) {
+  let duration =  formatTime(currentSong.duration)
+  let time = formatTime(currentSong.currentTime)
+  document.querySelector(".duration").innerHTML = `${time}/${duration}`
+  document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
+  document.querySelector(".seek").addEventListener("click", (e) => {
+    let seekBar = e.currentTarget; // Seek bar element
+    let clickPosition = e.offsetX; // Clicked position
+    let seekBarWidth = seekBar.clientWidth; // Total width of seek bar
+    let percentage = clickPosition / seekBarWidth; // Percentage of click
+    let newTime = currentSong.duration * percentage; // New song time
+
+    currentSong.currentTime = newTime; // Update song time
+    document.querySelector(".circle").style.left = (percentage * 100) + "%"; // Move circle
+});
+
+// Update seek bar during playback
+currentSong.addEventListener("timeupdate", () => {
+    let percentage = (currentSong.currentTime / currentSong.duration) * 100;
+    document.querySelector(".circle").style.left = percentage + "%";
+});
+
+// Handle song end
+currentSong.addEventListener("ended", () => {
+    currentSong.pause(); // Pause the song
+    currentSong.currentTime = 0; // Reset to start
+    document.querySelector(".circle").style.left = "0%"; // Move circle to start
+    document.querySelector(".playBtn").src = "/imgs/play.svg"; // Change play button
+});
+}
+
+
+function formatTime(seconds) {
+  if (isNaN(seconds) || seconds === Infinity) {
+    return "00:00"; // Jab tak value load na ho, tab tak 00:00 return karein
+  }
+
+  let minutes = Math.floor(seconds / 60);
+  let secs = Math.floor(seconds % 60);
+
+  // Agar minutes ya seconds single digit ho to leading zero add karein
+  let formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+  let formattedSeconds = secs < 10 ? "0" + secs : secs;
+
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
 async function playMusic(url) {
   songs = [];
   let d = await fetch(url);
@@ -88,6 +135,9 @@ async function playMusic(url) {
         document.querySelector(".playBtn").src = "/imgs/pause.svg"
         currentCard = card 
         updateName(currentSong)
+        currentSong.addEventListener("timeupdate", () => {
+  duration(currentSong);
+});
       })
     });
     
@@ -134,6 +184,7 @@ async function main() {
     card.addEventListener("click", () => {
       playMusic(url)
       document.querySelector(".left").style.left = "0px"
+      document.querySelector(".playlist").style.backgroundColor = "#0c0c0c"
     })
   });
   document.querySelector(".playBtn").addEventListener("click",()=>{
@@ -164,6 +215,9 @@ async function main() {
   currentSong = new Audio(songs[currentIndex]);
   currentSong.play();
 updateName(currentSong)
+currentSong.addEventListener("timeupdate", () => {
+  duration(currentSong);
+});
   // Play button update karo
   document.querySelector(".playBtn").src = "/imgs/pause.svg";
 
@@ -193,6 +247,9 @@ document.querySelector(".nextBtn").addEventListener("click", () => {
   currentSong = new Audio(songs[currentIndex]);
   currentSong.play();
  updateName(currentSong)
+ currentSong.addEventListener("timeupdate", () => {
+  duration(currentSong);
+});
   // Play button update karo
   document.querySelector(".playBtn").src = "/imgs/pause.svg";
 

@@ -63,11 +63,11 @@ ul{
     display: flex;
     flex-direction: column;
     gap: 5px;
-    background-color: #0c0c0c;
+   border-radius: 14px;
     overflow-y: scroll;
 }
 .library>:last-child{
-    font-size: 2vw;
+    font-size: max(16px, 1vw);
     position: absolute;
     bottom: 10px;
     left: 25px;
@@ -173,6 +173,7 @@ background-position: center;
   align-items: center;
 }
 .seekbar >.info{
+  height: 20px;
   width: 98%;
   justify-content: space-between;
   padding: 5px;
@@ -180,7 +181,7 @@ background-position: center;
 .seekbar> .seek{
   position: relative;
   height: 4px;
-  width: 98%;
+  width: 95%;
   background-color: red;
   border-radius: 7px;
   display: flex;
@@ -226,6 +227,8 @@ background-position: center;
     }
     .hamburger{
         display: block;
+        margin-right: 10px;
+        margin-top: 7px;
     }
     .card:hover {
         transform: none; /* Reset scale */
